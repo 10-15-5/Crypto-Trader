@@ -2,7 +2,6 @@ import cbpro
 import os
 import logging
 import time
-import requests
 import configparser
 import sys
 import smtplib
@@ -177,20 +176,6 @@ def writetolog(dets, market):
     
 
     logger.info(msg)
-
-
-def sendmsg(order_details):
-    try:
-        msg = f'{order_details["product_id"]} - You got {order_details["filled_size"]} for ' \
-              f'{config.get("CONFIG", "CURRENCY")}{float(order_details["specified_funds"]): .2f}'
-    except:
-        msg = f'You bought some crypto but for some reason the messaging part of it fucked up!'
-
-    url = f"https://api.telegram.org/bot{config.get('CONFIG', 'TELEGRAM_BOT_TOKEN')}/sendMessage?chat_id=" \
-          f"{config.get('CONFIG', 'TELEGRAM_CHAT_ID')}&text={msg}"
-
-    # send the msg
-    requests.get(url)
 
 
 def sendemail(order_details, market):
